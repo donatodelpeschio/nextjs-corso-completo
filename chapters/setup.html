@@ -1,0 +1,151 @@
+<h1>Setup e Primo Progetto</h1>
+
+<h2>Installazione</h2>
+<p>Assicurati di avere Node.js installato (versione 18.18 o superiore).</p>
+
+<div class="terminal">
+    <code>node --version  # Verifica versione (serve >= 18.18)</code>
+</div>
+
+<h2>Creare un Progetto Next.js 15+</h2>
+
+<div class="terminal">
+    <code>npx create-next-app@latest my-first-nextjs-app</code>
+</div>
+
+<p>Durante l'installazione risponderai a queste domande:</p>
+
+<pre data-lang="bash"><code>✔ Would you like to use TypeScript? … No / Yes
+✔ Would you like to use ESLint? … No / Yes
+✔ Would you like to use Tailwind CSS? … No / Yes
+✔ Would you like your code inside a `src/` directory? … No / Yes
+✔ Would you like to use App Router? … No / Yes  ← YES!
+✔ Would you like to use Turbopack for `next dev`? … No / Yes
+✔ Would you like to customize the import alias? … No / Yes</code></pre>
+
+<div class="info-box tip">
+    <div class="info-box-title">💡 Configurazione Consigliata</div>
+    <ul>
+        <li><strong>TypeScript:</strong> No (per iniziare)</li>
+        <li><strong>ESLint:</strong> Yes</li>
+        <li><strong>Tailwind:</strong> Yes</li>
+        <li><strong>src/ directory:</strong> No</li>
+        <li><strong>App Router:</strong> YES! ⭐</li>
+        <li><strong>Turbopack:</strong> Yes (Next.js 15+ stable)</li>
+    </ul>
+</div>
+
+<h2>Avviare il Server</h2>
+
+<div class="terminal">
+    <code>cd my-first-nextjs-app
+npm run dev</code>
+</div>
+
+<p>Apri <span class="inline-code">http://localhost:3000</span> - vedrai la pagina di benvenuto!</p>
+
+<div class="info-box note">
+    <div class="info-box-title">⚡ Turbopack in Next.js 15</div>
+    <p>Se hai scelto Turbopack, il dev server sarà ultra-veloce. Altrimenti puoi usarlo manualmente: <span class="inline-code">npm run dev -- --turbo</span></p>
+</div>
+
+<h2>Struttura del Progetto</h2>
+
+<pre data-lang="structure"><code>my-first-nextjs-app/
+├── app/                    ← Il cuore dell'applicazione
+│   ├── layout.js          ← Layout principale
+│   ├── page.js            ← Homepage (/)
+│   ├── globals.css        ← Stili globali
+│   └── favicon.ico
+├── public/                ← File statici
+├── package.json
+├── next.config.js
+└── .eslintrc.json</code></pre>
+
+<div class="key-concept">
+    <div class="key-concept-title">📁 La Cartella app/</div>
+    <p>Con l'App Router, <strong>tutto vive in app/</strong>. Ogni file <span class="inline-code">page.js</span> diventa una route.</p>
+</div>
+
+<h2>La Tua Prima Pagina</h2>
+
+<pre data-lang="jsx"><code>// app/page.js
+export default function Home() {
+  return (
+    &lt;main className="p-8"&gt;
+      &lt;h1 className="text-4xl font-bold mb-4"&gt;
+        La Mia Prima App Next.js 15! 🚀
+      &lt;/h1&gt;
+      &lt;p className="text-gray-300"&gt;
+        Sto imparando Next.js!
+      &lt;/p&gt;
+    &lt;/main&gt;
+  )
+}</code></pre>
+
+<p>Salva - il browser si aggiorna automaticamente (Hot Module Replacement)!</p>
+
+<h2>Creare una Seconda Pagina</h2>
+
+<ol>
+    <li>Crea cartella <span class="inline-code">app/about/</span></li>
+    <li>Dentro crea <span class="inline-code">page.js</span></li>
+</ol>
+
+<pre data-lang="jsx"><code>// app/about/page.js
+export default function About() {
+  return (
+    &lt;main className="p-8"&gt;
+      &lt;h1 className="text-4xl font-bold"&gt;Chi Sono&lt;/h1&gt;
+      &lt;p&gt;Sviluppatore che impara Next.js 15!&lt;/p&gt;
+    &lt;/main&gt;
+  )
+}</code></pre>
+
+<p>Vai su <span class="inline-code">/about</span> - funziona! ✨</p>
+
+<h2>Navigazione tra Pagine</h2>
+
+<pre data-lang="jsx"><code>// app/page.js
+import Link from 'next/link'
+
+export default function Home() {
+  return (
+    &lt;main className="p-8"&gt;
+      &lt;h1&gt;Homepage&lt;/h1&gt;
+      &lt;Link 
+        href="/about" 
+        className="text-cyan-400 hover:underline"
+      &gt;
+        Vai ad About →
+      &lt;/Link&gt;
+    &lt;/main&gt;
+  )
+}</code></pre>
+
+<div class="info-box note">
+    <div class="info-box-title">⚡ Perché Link?</div>
+    <p><span class="inline-code">&lt;Link&gt;</span> = navigazione client-side veloce + prefetching automatico!</p>
+</div>
+
+<div class="exercise">
+    <div class="exercise-title">🎯 Esercizio Pratico</div>
+    <p><strong>Crea 3 pagine:</strong></p>
+    <ol>
+        <li>Homepage (<span class="inline-code">/</span>)</li>
+        <li>Projects (<span class="inline-code">/projects</span>)</li>
+        <li>Contact (<span class="inline-code">/contact</span>)</li>
+        <li>Menu di navigazione con Link</li>
+    </ol>
+    <p><strong>Tempo:</strong> 20 minuti</p>
+</div>
+
+<div class="chapter-nav">
+    <a href="#intro" class="btn secondary" onclick="showChapter('intro')">← Introduzione</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-setup">
+            ✓ Segna Completato
+        </button>
+        <a href="#routing" class="btn" onclick="completeAndContinue('routing')">Routing →</a>
+    </div>
+</div>

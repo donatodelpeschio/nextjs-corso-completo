@@ -1,0 +1,82 @@
+<h1>Ottimizzazione</h1>
+
+<h2>Image Optimization</h2>
+<pre data-lang="jsx"><code>import Image from 'next/image'
+
+export default function Page() {
+  return (
+    &lt;Image
+      src="/hero.jpg"
+      alt="Hero"
+      width={1200}
+      height={600}
+      priority  // Above fold
+      quality={90}
+    /&gt;
+  )
+}</code></pre>
+
+<h3>Remote Images</h3>
+<pre data-lang="js"><code>// next.config.js
+module.exports = {
+  images: {
+    remotePatterns: [
+      {
+        protocol: 'https',
+        hostname: 'example.com',
+      },
+    ],
+  },
+}</code></pre>
+
+<h2>Font Optimization</h2>
+<pre data-lang="jsx"><code>import { Inter, Fira_Code } from 'next/font/google'
+
+const inter = Inter({ subsets: ['latin'] })
+const fira = Fira_Code({ subsets: ['latin'] })
+
+export default function Layout({ children }) {
+  return (
+    &lt;html className={inter.className}&gt;
+      &lt;body&gt;{children}&lt;/body&gt;
+    &lt;/html&gt;
+  )
+}</code></pre>
+
+<h2>Script Optimization</h2>
+<pre data-lang="jsx"><code>import Script from 'next/script'
+
+export default function Page() {
+  return (
+    &lt;&gt;
+      &lt;Script
+        src="https://analytics.com/script.js"
+        strategy="lazyOnload"
+      /&gt;
+    &lt;/&gt;
+  )
+}</code></pre>
+
+<h2>Bundle Analysis</h2>
+<div class="terminal">
+    <code>npm install @next/bundle-analyzer
+ANALYZE=true npm run build</code>
+</div>
+
+<h2>Dynamic Import</h2>
+<pre data-lang="jsx"><code>import dynamic from 'next/dynamic'
+
+const HeavyComponent = dynamic(() => import('./Heavy'), {
+  loading: () => &lt;p&gt;Loading...&lt;/p&gt;,
+  ssr: false  // Skip SSR per questo componente
+})</code></pre>
+
+<div class="chapter-nav">
+    <a href="#middleware" class="btn secondary" onclick="showChapter('middleware')">← Middleware</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-optimization">
+            ✓ Segna Completato
+        </button>
+        <a href="#blog-project" class="btn" onclick="completeAndContinue('blog-project')">Blog Project →</a>
+    </div>
+</div>

@@ -1,0 +1,84 @@
+<h1>Deployment</h1>
+
+<h2>Vercel (Raccomandato)</h2>
+<ol>
+    <li>Push su GitHub</li>
+    <li>Vai su <a href="https://vercel.com" target="_blank" class="text-cyan-400">vercel.com</a></li>
+    <li>Click "New Project"</li>
+    <li>Importa repo</li>
+    <li>Deploy! ✨</li>
+</ol>
+
+<h3>Variabili d'Ambiente</h3>
+<pre data-lang="bash"><code># .env.local
+DATABASE_URL="postgresql://..."
+NEXT_PUBLIC_API_URL="https://..."</code></pre>
+<p>Aggiungi in Vercel: Settings → Environment Variables</p>
+
+<h2>Netlify</h2>
+<div class="terminal">
+    <code>npm run build
+netlify deploy --prod</code>
+</div>
+
+<h2>Docker</h2>
+<pre data-lang="dockerfile"><code>FROM node:20-alpine
+WORKDIR /app
+COPY package*.json ./
+RUN npm ci
+COPY . .
+RUN npm run build
+EXPOSE 3000
+CMD ["npm", "start"]</code></pre>
+
+<h2>Self-Hosted</h2>
+<div class="terminal">
+    <code>npm run build
+npm start
+# Server gira su porta 3000</code></pre>
+
+<h2>Static Export</h2>
+<pre data-lang="js"><code>// next.config.js
+module.exports = {
+  output: 'export',
+}</code></pre>
+
+<div class="terminal">
+    <code>npm run build
+# Output in /out - deploy su qualsiasi CDN</code></pre>
+
+<div class="info-box warning">
+    <div class="info-box-title">⚠️ Limitazioni Export</div>
+    <p>Con static export NON puoi usare:</p>
+    <ul>
+        <li>API Routes</li>
+        <li>Server-Side Rendering</li>
+        <li>Image Optimization dinamica</li>
+        <li>Middleware</li>
+    </ul>
+</div>
+
+<h2>Performance Checklist</h2>
+<ul>
+    <li>✅ Image optimization attiva</li>
+    <li>✅ Font optimization</li>
+    <li>✅ ISR per contenuti dinamici</li>
+    <li>✅ Analytics configurati</li>
+    <li>✅ Error tracking (Sentry)</li>
+    <li>✅ Sitemap e robots.txt</li>
+</ul>
+
+<div class="info-box tip">
+    <div class="info-box-title">🎉 Congratulazioni!</div>
+    <p>Hai completato il corso! Ora sai padroneggiare Next.js 15+ da zero a production.</p>
+</div>
+
+<div class="chapter-nav">
+    <a href="#blog-project" class="btn secondary" onclick="showChapter('blog-project')">← Blog Project</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-deployment">
+            ✓ Segna Completato
+        </button>
+        <a href="#intro" class="btn" onclick="showChapter('intro')">🏁 Torna all'Inizio</a>
+    </div>
+</div>

@@ -1,0 +1,155 @@
+<h1>Pages Router vs App Router</h1>
+
+<h2>Due Paradigmi Diversi</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>Aspetto</th>
+            <th>Pages Router</th>
+            <th>App Router</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>Introdotto</td>
+            <td>Next.js 1 (2016)</td>
+            <td>Next.js 13 (2022)</td>
+        </tr>
+        <tr>
+            <td>Stato (2026)</td>
+            <td>Maintenance mode</td>
+            <td>✅ Raccomandato</td>
+        </tr>
+        <tr>
+            <td>Cartella</td>
+            <td><span class="inline-code">pages/</span></td>
+            <td><span class="inline-code">app/</span></td>
+        </tr>
+        <tr>
+            <td>Componenti Default</td>
+            <td>Client</td>
+            <td>Server</td>
+        </tr>
+        <tr>
+            <td>Data Fetching</td>
+            <td>getServerSideProps</td>
+            <td>async/await</td>
+        </tr>
+        <tr>
+            <td>React</td>
+            <td>React 18</td>
+            <td>React 19+</td>
+        </tr>
+        <tr>
+            <td>Params (Next.js 15+)</td>
+            <td>Sync</td>
+            <td>Async (Promise)</td>
+        </tr>
+    </tbody>
+</table>
+
+<div class="key-concept">
+    <div class="key-concept-title">💡 Il Futuro è App Router</div>
+    <p>Nel 2026, Pages Router è in maintenance mode. Tutte le nuove features (Server Components, Streaming, PPR) sono solo in App Router.</p>
+</div>
+
+<h2>Confronto Codice</h2>
+
+<h3>Metadata (SEO)</h3>
+
+<pre data-lang="jsx"><code>// PAGES ROUTER
+import Head from 'next/head'
+
+export default function Page() {
+  return (
+    &lt;&gt;
+      &lt;Head&gt;
+        &lt;title&gt;Titolo&lt;/title&gt;
+        &lt;meta name="description" content="..." /&gt;
+      &lt;/Head&gt;
+      &lt;div&gt;Contenuto&lt;/div&gt;
+    &lt;/&gt;
+  )
+}
+
+// APP ROUTER
+export const metadata = {
+  title: 'Titolo',
+  description: '...'
+}
+
+export default function Page() {
+  return &lt;div&gt;Contenuto&lt;/div&gt;
+}</code></pre>
+
+<h3>Data Fetching</h3>
+
+<pre data-lang="jsx"><code>// PAGES ROUTER
+export async function getServerSideProps() {
+  const data = await fetch('...')
+  return { props: { data } }
+}
+
+export default function Page({ data }) {
+  return &lt;div&gt;{data}&lt;/div&gt;
+}
+
+// APP ROUTER
+async function getData() {
+  return await fetch('...')
+}
+
+export default async function Page() {
+  const data = await getData()
+  return &lt;div&gt;{data}&lt;/div&gt;
+}</code></pre>
+
+<h2>Quando Usare Cosa?</h2>
+
+<div class="info-box tip">
+    <div class="info-box-title">✅ Usa App Router se:</div>
+    <ul>
+        <li>Nuovo progetto (2026)</li>
+        <li>Vuoi React 19 e Server Components</li>
+        <li>Vuoi performance massime</li>
+        <li>Vuoi le ultime features</li>
+    </ul>
+</div>
+
+<div class="info-box warning">
+    <div class="info-box-title">⚠️ Usa Pages Router solo se:</div>
+    <ul>
+        <li>Progetto esistente legacy</li>
+        <li>Dipendenze incompatibili con Server Components</li>
+        <li>Team non pronto al cambiamento</li>
+    </ul>
+</div>
+
+<h2>Migrazione</h2>
+
+<p>Puoi usare entrambi insieme temporaneamente:</p>
+
+<pre data-lang="structure"><code>my-app/
+├── pages/              ← Route legacy
+│   └── old-page.js
+└── app/                ← Nuove route
+    └── new-page/
+        └── page.js
+
+# Le route in app/ hanno precedenza</code></pre>
+
+<div class="info-box note">
+    <div class="info-box-title">📊 Statistiche 2026</div>
+    <p>Oltre l'80% dei nuovi progetti Next.js usa App Router. Pages Router riceve solo security fixes.</p>
+</div>
+
+<div class="chapter-nav">
+    <a href="#routing" class="btn secondary" onclick="showChapter('routing')">← Routing</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-pages-vs-app">
+            ✓ Segna Completato
+        </button>
+        <a href="#rendering" class="btn" onclick="completeAndContinue('rendering')">Rendering →</a>
+    </div>
+</div>

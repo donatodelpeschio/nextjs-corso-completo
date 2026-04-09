@@ -1,0 +1,64 @@
+<h1>Middleware</h1>
+
+<h2>Cos'è il Middleware</h2>
+<p>Esegue PRIMA che una richiesta sia completata. Perfetto per auth, redirects, headers.</p>
+
+<pre data-lang="jsx"><code>// middleware.js (root progetto)
+import { NextResponse } from 'next/server'
+
+export function middleware(request) {
+  const token = request.cookies.get('token')
+  
+  // Redirect se non autenticato
+  if (!token && request.nextUrl.pathname.startsWith('/dashboard')) {
+    return NextResponse.redirect(new URL('/login', request.url))
+  }
+  
+  return NextResponse.next()
+}
+
+export const config = {
+  matcher: '/dashboard/:path*',
+}</code></pre>
+
+<h2>Rewrite</h2>
+<pre data-lang="jsx"><code>export function middleware(request) {
+  // Rewrite /blog/* → /posts/*
+  if (request.nextUrl.pathname.startsWith('/blog')) {
+    return NextResponse.rewrite(
+      new URL(
+        request.nextUrl.pathname.replace('/blog', '/posts'),
+        request.url
+      )
+    )
+  }
+}</code></pre>
+
+<h2>Headers Personalizzati</h2>
+<pre data-lang="jsx"><code>export function middleware(request) {
+  const response = NextResponse.next()
+  
+  response.headers.set('x-custom-header', 'value')
+  response.headers.set('x-pathname', request.nextUrl.pathname)
+  
+  return response
+}</code></pre>
+
+<h2>Geo-Location</h2>
+<pre data-lang="jsx"><code>export function middleware(request) {
+  const country = request.geo?.country || 'US'
+  const response = NextResponse.next()
+  
+  response.cookies.set('country', country)
+  return response
+}</code></pre>
+
+<div class="chapter-nav">
+    <a href="#api-routes" class="btn secondary" onclick="showChapter('api-routes')">← API Routes</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-middleware">
+            ✓ Segna Completato
+        </button>
+        <a href="#optimization" class="btn" onclick="completeAndContinue('optimization')">Ottimizzazione →</a>
+    </div>
+</div>

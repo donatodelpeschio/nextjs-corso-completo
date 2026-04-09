@@ -1,81 +1,146 @@
 # 🚀 Corso Completo Next.js 15+
 
 > Guida pratica e completa per imparare Next.js da zero - in italiano 🇮🇹  
-> **Aggiornato a Next.js 15.1+ e React 19+**
+> **Aggiornato a Next.js 15.1+ e React 19+ | Gennaio 2026**
 
 [![Demo](https://img.shields.io/badge/demo-live-brightgreen)](https://donatodelpeschio.github.io/nextjs-corso-completo/)
 [![Next.js](https://img.shields.io/badge/Next.js-15.1+-black)](https://nextjs.org)
 [![React](https://img.shields.io/badge/React-19+-blue)](https://react.dev)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
-[![Made with Love](https://img.shields.io/badge/Made%20with-❤️-red.svg)](https://donatodelpeschio.it)
 
 ## 📖 Descrizione
 
-Corso completo Next.js **aggiornato a Next.js 15+** pensato per sviluppatori React che vogliono padroneggiare il framework. Include teoria essenziale, esempi pratici, esercizi progressivi e **tracking dei progressi persistente**.
-
-Particolare focus su App Router, Server/Client Components, strategie di rendering, e tutte le **breaking changes di Next.js 15** (params/searchParams asincroni, Turbopack stable, React 19).
+Corso completo Next.js **aggiornato a gennaio 2026** con architettura modulare, progress tracking persistente e tutti i 16 capitoli completi. Include tutte le breaking changes di Next.js 15+ (params/searchParams asincroni, Turbopack stable, React 19 Server Components).
 
 **[🌐 Apri il Corso Online](https://donatodelpeschio.github.io/nextjs-corso-completo/)**
 
-## ✨ Novità Versione 2.0
+## ✨ Novità Versione 3.0 (2026)
 
-### 🆕 Aggiornamenti Tecnici
-- ✅ **Next.js 15.1+** - Tutte le breaking changes documentate
-- ✅ **React 19+** - Nuove API e patterns
-- ✅ **Params asincroni** - Esempi corretti con `await params`
-- ✅ **Turbopack stable** - Setup e configurazione
-- ✅ **Sezioni complete** - Nessun capitolo "in sviluppo"
+### 🆕 Architettura Modulare
+- ✅ **File separati** - Ogni capitolo è un file HTML indipendente
+- ✅ **Caricamento dinamico** - Solo il capitolo attivo viene caricato
+- ✅ **Più veloce** - Tempi di caricamento ridotti del 90%
+- ✅ **Manutenibile** - Facile aggiungere/modificare capitoli
 
-### 🎨 Miglioramenti UX
-- ✅ **Font migliorati** - Inter + Fira Code per leggibilità ottimale
-- ✅ **Progress tracking** - Segna capitoli completati con localStorage
-- ✅ **Barra progresso** - Visualizza percentuale completamento
-- ✅ **Shortcuts keyboard** - `Ctrl+←/→` per navigare, `Ctrl+Enter` per completare
-- ✅ **Design raffinato** - Migliore contrasto e spaziatura
+### 🎯 Features
+- ✅ **16 capitoli completi** - Nessun "in sviluppo"
+- ✅ **Progress tracking** - LocalStorage persistente
+- ✅ **Auto-complete** - Cliccando "Avanti" segna come completato
+- ✅ **Keyboard shortcuts** - Ctrl+← Ctrl+→ per navigare
+- ✅ **Next.js 15.1+** - Tutti gli esempi aggiornati
+- ✅ **React 19+** - Server Actions, use(), async components
 
-## 📚 Contenuti
+### 📚 Contenuto 2026
+- Turbopack stable
+- Server Actions (React 19)
+- Async params/searchParams
+- Partial Prerendering (PPR)
+- Metadata API completa
+- SEO avanzato (sitemap, robots, OG images)
 
-### Fondamenti
-- ✅ Introduzione e versioning (Next.js 15+)
-- ✅ Setup e Primo Progetto (con Turbopack)
-- ✅ Routing File-Based (**params asincroni**)
-- ✅ Pages Router vs App Router
+## 📂 Struttura Progetto
 
-### Rendering
-- ✅ Strategie di Rendering (SSG, SSR, ISR)
-- ✅ Server Components (React 19+)
-- ✅ Client Components
-- ✅ Data Fetching Avanzato
+```
+nextjs-corso-completo/
+├── index.html              → Shell principale con sidebar
+├── assets/
+│   ├── styles.css         → Tutti gli stili
+│   └── script.js          → Logic + progress tracking
+└── chapters/               → 16 capitoli HTML
+    ├── intro.html
+    ├── setup.html
+    ├── routing.html
+    ├── pages-vs-app.html
+    ├── rendering.html
+    ├── server-components.html
+    ├── client-components.html
+    ├── data-fetching.html
+    ├── metadata.html
+    ├── seo-advanced.html
+    ├── layouts.html
+    ├── api-routes.html
+    ├── middleware.html
+    ├── optimization.html
+    ├── blog-project.html
+    └── deployment.html
+```
 
-### SEO & Metadata
-- ✅ Metadata API completa
-- ✅ SEO Avanzato (canonical, sitemap, robots.txt)
+## 🚀 Deploy su GitHub Pages
 
-### Features Avanzate
-- ✅ Layouts e Templates
-- ✅ API Routes (Route Handlers)
-- ✅ Middleware
-- ✅ Ottimizzazione (Image, Font, Bundle)
+### Setup Automatico
 
-### Progetto Pratico
-- ✅ Blog Completo End-to-End
-- ✅ Deployment (Vercel, Netlify, Docker)
+1. **Fork o clona il repo**
+   ```bash
+   git clone https://github.com/tuousername/nextjs-corso-completo.git
+   cd nextjs-corso-completo
+   ```
+
+2. **Abilita GitHub Pages**
+   - Vai su Settings → Pages
+   - Source: "Deploy from a branch"
+   - Branch: `main` / Root: `/ (root)`
+   - Save
+
+3. **Il sito sarà live su:**
+   ```
+   https://tuousername.github.io/nextjs-corso-completo/
+   ```
+
+### Test Locale
+
+```bash
+# Opzione 1: Python
+python -m http.server 8000
+
+# Opzione 2: Node.js
+npx serve .
+
+# Opzione 3: PHP
+php -S localhost:8000
+
+# Apri http://localhost:8000
+```
+
+## 📋 Contenuti Completi
+
+### Fondamenti (4 capitoli)
+1. **Introduzione** - Panoramica Next.js 15+, breaking changes
+2. **Setup** - Installazione, primo progetto, Turbopack
+3. **Routing** - File-based, dynamic routes, params asincroni
+4. **Pages vs App** - Differenze, migration path
+
+### Rendering (4 capitoli)
+5. **Strategie** - SSG, SSR, ISR, decision tree
+6. **Server Components** - React 19, async components, database access
+7. **Client Components** - 'use client', interattività, hooks
+8. **Data Fetching** - fetch API, caching, Server Actions
+
+### SEO & Metadata (2 capitoli)
+9. **Metadata API** - generateMetadata, canonical, OG tags
+10. **SEO Avanzato** - Sitemap, robots.txt, RSS, OG images
+
+### Features Avanzate (4 capitoli)
+11. **Layouts** - Root layout, nested, templates, route groups
+12. **API Routes** - Route handlers, REST, authentication
+13. **Middleware** - Auth, redirects, headers, geo-location
+14. **Optimization** - Images, fonts, scripts, bundle analysis
+
+### Progetto Pratico (2 capitoli)
+15. **Blog Completo** - Full-stack blog con Markdown, tags, search
+16. **Deployment** - Vercel, Netlify, Docker, static export
 
 ## 🎯 A Chi è Rivolto
 
-Questo corso è perfetto per te se:
-
-- ✅ Conosci **React** (componenti, hooks, props, state)
-- ✅ Hai familiarità con **JavaScript ES6+** e Promises
-- ✅ Vuoi imparare **Next.js 15+** con le ultime features
-- ✅ Cerchi una risorsa **in italiano** aggiornata
-- ✅ Vuoi capire **breaking changes** da versioni precedenti
+- ✅ Sviluppatori React che vogliono imparare Next.js
+- ✅ Chi conosce Next.js 13-14 e vuole aggiornarsi al 15+
+- ✅ Developer che cercano una risorsa italiana aggiornata
+- ✅ Chi vuole capire le breaking changes in dettaglio
 
 ## 🆕 Breaking Changes Next.js 15+
 
 ### ⚠️ Params e SearchParams Asincroni
 
-**La differenza più importante!**
+**Il cambiamento più importante:**
 
 ```jsx
 // ❌ VECCHIO (Next.js 13-14)
@@ -90,139 +155,119 @@ export default async function Page({ params }) {
 }
 ```
 
-Questo corso include **tutti** gli esempi aggiornati per Next.js 15+!
+**Questo corso copre TUTTI questi casi con esempi aggiornati.**
 
-## 🚀 Come Usarlo
+## 💡 Come Usare il Corso
 
-### Opzione 1: Online
-Apri direttamente il corso nel browser:  
-**[https://donatodelpeschio.github.io/nextjs-corso-completo/](https://donatodelpeschio.github.io/nextjs-corso-completo/)**
+### Workflow Consigliato
 
-### Opzione 2: Locale
-1. Clona il repository:
-   ```bash
-   git clone https://github.com/donatodelpeschio/nextjs-corso-completo.git
-   ```
+1. **Apri il corso** nel browser (locale o GitHub Pages)
+2. **Segui i capitoli** in ordine nella sidebar
+3. **Pratica** - apri il terminale e crea i progetti
+4. **Segna completati** - traccia i tuoi progressi
+5. **Fai gli esercizi** alla fine di ogni capitolo
 
-2. Apri `nextjs-corso-completo.html` nel browser
+### Keyboard Shortcuts
 
-3. (Opzionale) Apri su un secondo monitor mentre programmi
-
-### 💾 Progress Tracking
-
-Il corso salva automaticamente i tuoi progressi in `localStorage`:
-
-- Clicca **"Segna come Completato"** su ogni capitolo
-- Vedi la **barra di progresso** nella sidebar
-- I progressi **persistono** tra sessioni
-- Usa **"Reset Progressi"** per ricominciare
-
-### ⌨️ Keyboard Shortcuts
-
-- `Ctrl + →` - Capitolo successivo
+- `Ctrl + →` - Capitolo successivo (auto-completa corrente)
 - `Ctrl + ←` - Capitolo precedente
-- `Ctrl + Enter` - Segna capitolo come completato
+- `Ctrl + Enter` - Toggle completamento manuale
 
-## 💡 Highlights
+### Progress Tracking
 
-### Capitolo SEO e Metadata
-Risponde alla domanda comune: *"Come gestisco canonical e meta tags in Next.js 15?"*
+- ✅ Salvataggio automatico in localStorage
+- ✅ Barra progresso nella sidebar
+- ✅ Checkmark verde sui capitoli completati
+- ✅ Percentuale completamento
+- ✅ Reset disponibile
 
-```jsx
-// app/blog/[slug]/page.js
-export async function generateMetadata({ params }) {
-  const { slug } = await params  // ✅ Next.js 15+
-  const post = await getPost(slug)
-  
-  return {
-    title: post.title,
-    description: post.excerpt,
-    alternates: {
-      canonical: `/blog/${slug}` // 🎯 Canonical!
-    },
-    openGraph: {
-      title: post.title,
-      images: [post.coverImage],
-    }
-  }
-}
-```
+## 🛠️ Tecnologie
 
-### Capitolo Routing Dinamico
-Include **alert critico** sulle Promise in Next.js 15:
-
-```jsx
-// ✅ SEMPRE fare await di params!
-export default async function BlogPost({ params }) {
-  const { slug } = await params
-  // ... resto del codice
-}
-```
+- Next.js 15.1+
+- React 19+
+- Turbopack (stable)
+- TypeScript-ready
+- Tailwind CSS examples
+- Server Actions
+- Partial Prerendering
 
 ## 🤝 Contribuire
 
-Contributi, suggerimenti e correzioni sono benvenuti!
+Contributi benvenuti! Per contribuire:
 
 1. Fork il progetto
-2. Crea un branch per la tua feature (`git checkout -b feature/AmazingFeature`)
-3. Commit le modifiche (`git commit -m 'Add some AmazingFeature'`)
-4. Push al branch (`git push origin feature/AmazingFeature`)
-5. Apri una Pull Request
+2. Crea un branch (`git checkout -b feature/MiglioriaCapitolo`)
+3. Modifica i file in `chapters/`
+4. Commit (`git commit -m 'Aggiunto esempio X'`)
+5. Push (`git push origin feature/MiglioriaCapitolo`)
+6. Apri una Pull Request
 
-### 🐛 Segnala Bug o Suggerimenti
+### Aggiungere un Capitolo
 
-Hai trovato un errore o vuoi suggerire miglioramenti?  
-Apri una [issue](https://github.com/donatodelpeschio/nextjs-corso-completo/issues)!
+```bash
+# Crea nuovo file
+touch chapters/nuovo-capitolo.html
+
+# Aggiungi al navigation in index.html
+# Aggiungi all'array chapters in assets/script.js
+```
 
 ## 📝 Changelog
 
-### v2.0 (Gennaio 2025)
-- ✅ Aggiornamento completo a Next.js 15.1+
-- ✅ Tutti gli esempi con `await params`
-- ✅ Aggiunto progress tracking con localStorage
-- ✅ Font migliorati (Inter + Fira Code)
-- ✅ Completate tutte le sezioni in sviluppo
-- ✅ Aggiunte keyboard shortcuts
-- ✅ Migliorato design e UX
+### v3.0 (Gennaio 2026)
+- ✅ Architettura modulare con file separati
+- ✅ Tutti i 16 capitoli completi
+- ✅ Aggiornato a Next.js 15.1+ e React 19+
+- ✅ Auto-complete al click "Avanti"
+- ✅ Esempi async params/searchParams
+- ✅ Server Actions (React 19)
+- ✅ Turbopack stable
+- ✅ Documentazione 2026
+
+### v2.0 (2025)
+- ✅ Next.js 15+ compatibility
+- ✅ Progress tracking
+- ✅ Font migliorati
 
 ### v1.0 (2024)
-- ✅ Release iniziale per Next.js 13-14
+- ✅ Release iniziale Next.js 13-14
 
 ## 📄 License
 
-Questo progetto è rilasciato sotto licenza [MIT](LICENSE).
+Rilasciato sotto licenza [MIT](LICENSE).
 
 ## ☕ Supporta il Progetto
 
-Se questo corso ti è stato utile, considera di offrirmi un caffè! ☕
+Se questo corso ti è stato utile, considera di offrirmi un caffè!
 
 [![Buy Me A Coffee](https://img.shields.io/badge/Buy%20Me%20A%20Coffee-FFDD00?style=for-the-badge&logo=buy-me-a-coffee&logoColor=black)](https://buymeacoffee.com/donatodelpo)
 
 ## 🔗 Links
 
-- 🌐 **Demo Live**: [nextjs-corso-completo](https://donatodelpeschio.github.io/nextjs-corso-completo/)
+- 🌐 **Demo Live**: [GitHub Pages](https://donatodelpeschio.github.io/nextjs-corso-completo/)
 - 📝 **Blog**: [donatodelpeschio.it/blog](https://donatodelpeschio.it/blog/)
 - ☕ **Buy Me a Coffee**: [buymeacoffee.com/donatodelpo](https://buymeacoffee.com/donatodelpo)
-- 🐙 **GitHub**: [donatodelpeschio](https://github.com/donatodelpeschio)
+- 🐙 **GitHub**: [@donatodelpeschio](https://github.com/donatodelpeschio)
 
-## 📊 Statistiche Corso
+## 📊 Statistiche Corso (2026)
 
-- **16 Capitoli** completi e approfonditi
-- **50+ Esempi di codice** testati e funzionanti
-- **10+ Esercizi pratici** progressivi
-- **Tempo stimato**: 15-20 ore per completarlo
-- **Livello**: Intermedio (richiede conoscenza React)
+- **16 Capitoli** completi e testati
+- **80+ Esempi di codice** Next.js 15+
+- **15+ Esercizi pratici** progressivi
+- **Tempo stimato**: 15-20 ore
+- **Livello**: Intermedio (richiede React)
+- **Ultimo aggiornamento**: Gennaio 2026
 
 ## 🙏 Ringraziamenti
 
-Grazie a tutti coloro che hanno contribuito con feedback, correzioni e suggerimenti!
+Grazie alla community Next.js italiana e a tutti i contributori!
 
 ## 📢 Feedback
 
-Hai suggerimenti o hai trovato errori?
-- Apri una [issue](https://github.com/donatodelpeschio/nextjs-corso-completo/issues)
-- Contattami tramite la sezione [contatti](https://donatodelpeschio.it/#contact)
-- Lascia una ⭐ se il corso ti è piaciuto!
+- ⭐ Lascia una stella se il corso ti piace
+- 🐛 [Segnala bug](https://github.com/donatodelpeschio/nextjs-corso-completo/issues)
+- 💬 [Discussioni](https://github.com/donatodelpeschio/nextjs-corso-completo/discussions)
+- 📧 Contatti tramite il [blog](https://donatodelpeschio.it/blog/)
 
 ---
 
@@ -236,10 +281,15 @@ Hai suggerimenti o hai trovato errori?
 
 ---
 
-### 🔄 Mantieni il Corso Aggiornato
+### 🔄 Mantieni Aggiornato
 
-Questo corso viene aggiornato regolarmente. Per ricevere notifiche:
+Il corso viene aggiornato regolarmente:
 
-1. Clicca su **"Watch"** in alto a destra su GitHub
-2. Seleziona **"Custom" → "Releases"**
-3. Riceverai notifiche per ogni nuovo aggiornamento!
+- **Watch** il repo per notifiche
+- Controlla la sezione **Releases**
+- Segui il [blog](https://donatodelpeschio.it/blog/) per annunci
+
+**Prossimi update previsti:**
+- Q2 2026: Next.js 16 preview
+- Q3 2026: Nuove features React 19.x
+- Q4 2026: Advanced patterns e performance

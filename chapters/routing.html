@@ -1,0 +1,142 @@
+<h1>Routing File-Based</h1>
+
+<div class="info-box critical">
+    <div class="info-box-title">🔴 BREAKING CHANGE - Next.js 15+</div>
+    <p><strong>Da Next.js 15, <span class="inline-code">params</span> e <span class="inline-code">searchParams</span> sono Promise!</strong></p>
+    <p>Devi fare <span class="inline-code">await</span>:</p>
+    <pre data-lang="jsx" style="margin-top: 1rem;"><code>// ❌ VECCHIO (Next.js 13-14)
+export default function Page({ params }) {
+  return &lt;div&gt;{params.slug}&lt;/div&gt;
+}
+
+// ✅ NUOVO (Next.js 15+)
+export default async function Page({ params }) {
+  const { slug } = await params
+  return &lt;div&gt;{slug}&lt;/div&gt;
+}</code></pre>
+</div>
+
+<h2>File Speciali</h2>
+
+<table>
+    <thead>
+        <tr>
+            <th>File</th>
+            <th>Scopo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr><td><span class="inline-code">page.js</span></td><td>Pagina accessibile via URL</td></tr>
+        <tr><td><span class="inline-code">layout.js</span></td><td>Layout condiviso</td></tr>
+        <tr><td><span class="inline-code">loading.js</span></td><td>UI di caricamento</td></tr>
+        <tr><td><span class="inline-code">error.js</span></td><td>Error boundary</td></tr>
+        <tr><td><span class="inline-code">not-found.js</span></td><td>Pagina 404</td></tr>
+        <tr><td><span class="inline-code">route.js</span></td><td>API endpoint</td></tr>
+    </tbody>
+</table>
+
+<h2>Route Dinamiche</h2>
+
+<pre data-lang="structure"><code>app/
+├── blog/
+│   ├── page.js           → /blog
+│   └── [slug]/
+│       └── page.js       → /blog/:slug</code></pre>
+
+<pre data-lang="jsx"><code>// app/blog/[slug]/page.js - Next.js 15+
+export default async function BlogPost({ params }) {
+  const { slug } = await params  // ✅ await!
+  
+  return &lt;h1&gt;Post: {slug}&lt;/h1&gt;
+}</code></pre>
+
+<div class="key-concept">
+    <div class="key-concept-title">🆕 Params è Promise</div>
+    <p>Next.js 15 ha reso <span class="inline-code">params</span> asincrono per ottimizzazioni future. <strong>Sempre await!</strong></p>
+</div>
+
+<h2>Route Annidate</h2>
+
+<pre data-lang="jsx"><code>// app/shop/[category]/[product]/page.js
+export default async function Product({ params }) {
+  const { category, product } = await params
+  
+  return (
+    &lt;div&gt;
+      &lt;h1&gt;{category}&lt;/h1&gt;
+      &lt;h2&gt;{product}&lt;/h2&gt;
+    &lt;/div&gt;
+  )
+}
+// URL: /shop/elettronica/laptop</code></pre>
+
+<h2>Search Params (Query String)</h2>
+
+<pre data-lang="jsx"><code>// app/search/page.js
+export default async function SearchPage({ searchParams }) {
+  const params = await searchParams  // ✅ await!
+  const query = params.q
+  
+  return &lt;h1&gt;Cercando: {query}&lt;/h1&gt;
+}
+// URL: /search?q=nextjs</code></pre>
+
+<h2>Catch-All Routes</h2>
+
+<pre data-lang="jsx"><code>// app/docs/[...slug]/page.js
+export default async function Docs({ params }) {
+  const { slug } = await params
+  
+  return &lt;p&gt;Path: {slug.join('/')}&lt;/p&gt;
+}
+// /docs/api/auth → slug = ['api', 'auth']</code></pre>
+
+<h2>Optional Catch-All</h2>
+
+<pre data-lang="jsx"><code>// app/shop/[[...categories]]/page.js
+export default async function Shop({ params }) {
+  const { categories } = await params
+  
+  if (!categories) {
+    return &lt;h1&gt;Tutti i Prodotti&lt;/h1&gt;
+  }
+  
+  return &lt;h1&gt;{categories.join(' / ')}&lt;/h1&gt;
+}
+// Matcha: /shop E /shop/elettronica E /shop/elettronica/laptop</code></pre>
+
+<h2>Route Groups</h2>
+
+<pre data-lang="structure"><code>app/
+├── (marketing)/        ← Non nell'URL!
+│   ├── about/page.js  → /about
+│   └── contact/page.js → /contact
+└── (shop)/
+    └── products/page.js → /products</code></pre>
+
+<div class="info-box tip">
+    <div class="info-box-title">🎨 Route Groups</div>
+    <p>Organizza codice senza cambiare URL. Usa per layout diversi!</p>
+</div>
+
+<div class="exercise">
+    <div class="exercise-title">🎯 Esercizio: Blog</div>
+    <p><strong>Crea:</strong></p>
+    <ol>
+        <li>Lista post (<span class="inline-code">/blog</span>)</li>
+        <li>Post dinamico (<span class="inline-code">/blog/[slug]</span>)</li>
+        <li>Array hardcoded di post</li>
+        <li>Link dalla lista ai post</li>
+        <li><strong>⚠️ Ricorda await params!</strong></li>
+    </ol>
+</div>
+
+<div class="chapter-nav">
+    <a href="#setup" class="btn secondary" onclick="showChapter('setup')">← Setup</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-routing">
+            ✓ Segna Completato
+        </button>
+        <a href="#pages-vs-app" class="btn" onclick="completeAndContinue('pages-vs-app')">Pages vs App →</a>
+    </div>
+</div>

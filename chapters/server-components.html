@@ -1,0 +1,111 @@
+<h1>Server Components</h1>
+
+<h2>La Rivoluzione di React 19</h2>
+<p>I <strong>React Server Components</strong> sono la feature più rivoluzionaria dell'App Router.</p>
+
+<div class="key-concept">
+    <div class="key-concept-title">🎯 Concetto Chiave</div>
+    <p>Nell'App Router, <strong>ogni componente è un Server Component per default</strong>. Eseguono sul server, non inviano JavaScript al browser.</p>
+</div>
+
+<h2>Server Component = Default</h2>
+
+<pre data-lang="jsx"><code>// app/posts/page.js - SERVER COMPONENT
+async function getPosts() {
+  const res = await fetch('https://api.example.com/posts')
+  return res.json()
+}
+
+export default async function Posts() {
+  const posts = await getPosts()
+  
+  return (
+    &lt;div&gt;
+      {posts.map(post => (
+        &lt;article key={post.id}&gt;{post.title}&lt;/article&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}
+
+// ✅ Esegue sul server
+// ✅ Può essere async
+// ✅ Accesso diretto al database
+// ❌ NO useState, useEffect, onClick</code></pre>
+
+<h2>Vantaggi</h2>
+<ul>
+    <li><strong>Zero JavaScript al client</strong> - bundle più piccolo</li>
+    <li><strong>Accesso diretto ai dati</strong> - DB, filesystem, API private</li>
+    <li><strong>Sicurezza</strong> - segreti restano sul server</li>
+    <li><strong>Performance</strong> - elaborazione pesante sul server</li>
+</ul>
+
+<h2>Cosa PUOI fare</h2>
+<pre data-lang="jsx"><code>// ✅ Fetch dati
+const data = await fetch('...')
+
+// ✅ Leggere database
+import { db } from '@/lib/db'
+const users = await db.users.findMany()
+
+// ✅ Leggere file
+import fs from 'fs/promises'
+const content = await fs.readFile('data.json')
+
+// ✅ Usare variabili d'ambiente
+const key = process.env.SECRET_KEY</code></pre>
+
+<h2>Cosa NON puoi fare</h2>
+<pre data-lang="jsx"><code>// ❌ Hooks
+const [count, setCount] = useState(0)  // Errore!
+
+// ❌ Event handlers
+&lt;button onClick={() => {}}  // Errore!
+
+// ❌ Browser APIs
+window.localStorage  // Errore!</code></pre>
+
+<div class="info-box warning">
+    <div class="info-box-title">⚠️ Serve Interattività?</div>
+    <p>Usa un <strong>Client Component</strong> (prossimo capitolo)</p>
+</div>
+
+<h2>Accesso Diretto al Database</h2>
+<pre data-lang="jsx"><code>// app/users/page.js
+import { db } from '@/lib/db'
+
+export default async function Users() {
+  // Fetch DIRETTO dal database!
+  const users = await db.user.findMany({
+    orderBy: { createdAt: 'desc' }
+  })
+  
+  return (
+    &lt;ul&gt;
+      {users.map(user => (
+        &lt;li key={user.id}&gt;{user.name}&lt;/li&gt;
+      ))}
+    &lt;/ul&gt;
+  )
+}</code></pre>
+
+<div class="exercise">
+    <div class="exercise-title">🎯 Esercizio</div>
+    <p>Crea una pagina Server Component che:</p>
+    <ol>
+        <li>Fetcha utenti da <span class="inline-code">jsonplaceholder.typicode.com/users</span></li>
+        <li>Mostra la lista</li>
+        <li>Include il tempo di fetch nel render</li>
+    </ol>
+</div>
+
+<div class="chapter-nav">
+    <a href="#rendering" class="btn secondary" onclick="showChapter('rendering')">← Rendering</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-server-components">
+            ✓ Segna Completato
+        </button>
+        <a href="#client-components" class="btn" onclick="completeAndContinue('client-components')">Client Components →</a>
+    </div>
+</div>

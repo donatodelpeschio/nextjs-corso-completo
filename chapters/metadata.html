@@ -1,0 +1,160 @@
+<h1>Metadata e SEO</h1>
+
+<h2>La Tua Domanda Iniziale! 🎯</h2>
+<p>Ecco come risolvere il problema del canonical e meta tags per il tuo blog in Next.js 15+!</p>
+
+<h2>Metadata API Statica</h2>
+<p>Il modo più semplice - esporta un oggetto <span class="inline-code">metadata</span>:</p>
+
+<pre data-lang="jsx"><code>// app/page.js
+export const metadata = {
+  title: 'Il Mio Blog',
+  description: 'Blog su web development',
+  keywords: ['nextjs', 'react', 'javascript'],
+  authors: [{ name: 'Tuo Nome' }],
+  openGraph: {
+    title: 'Il Mio Blog',
+    description: 'Blog su web development',
+    images: ['/og-image.jpg'],
+  }
+}
+
+export default function Home() {
+  return &lt;h1&gt;Homepage&lt;/h1&gt;
+}</code></pre>
+
+<h2>Metadata Dinamica per Blog</h2>
+<p>Per pagine dinamiche, usa <span class="inline-code">generateMetadata</span>:</p>
+
+<pre data-lang="jsx"><code>// app/blog/[slug]/page.js
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params  // ✅ Next.js 15+!
+  
+  const post = await fetch(`https://api.example.com/posts/${slug}`)
+    .then(res => res.json())
+  
+  return {
+    title: post.title,
+    description: post.excerpt,
+    
+    // 🎯 CANONICAL - ecco come si fa!
+    alternates: {
+      canonical: `/blog/${slug}`
+    },
+    
+    // Open Graph
+    openGraph: {
+      title: post.title,
+      description: post.excerpt,
+      type: 'article',
+      publishedTime: post.date,
+      images: [post.coverImage],
+    },
+    
+    // Twitter Card
+    twitter: {
+      card: 'summary_large_image',
+      title: post.title,
+      images: [post.coverImage],
+    }
+  }
+}
+
+export default async function BlogPost({ params }) {
+  const { slug } = await params
+  const post = await getPost(slug)
+  
+  return &lt;article&gt;{post.content}&lt;/article&gt;
+}</code></pre>
+
+<h2>Cosa Genera Next.js</h2>
+<pre data-lang="html"><code>&lt;head&gt;
+  &lt;title&gt;Il Titolo del Post&lt;/title&gt;
+  &lt;meta name="description" content="..." /&gt;
+  &lt;link rel="canonical" href="https://..." /&gt;
+  
+  &lt;meta property="og:title" content="..." /&gt;
+  &lt;meta property="og:image" content="..." /&gt;
+  
+  &lt;meta name="twitter:card" content="..." /&gt;
+&lt;/head&gt;</code></pre>
+
+<h2>Layout con Metadata Base</h2>
+<pre data-lang="jsx"><code>// app/layout.js
+export const metadata = {
+  metadataBase: new URL('https://tuosito.com'),
+  
+  title: {
+    default: 'Il Mio Blog',
+    template: '%s | Il Mio Blog'  // %s = titolo pagina
+  },
+  
+  description: 'Blog su web development',
+  
+  openGraph: {
+    type: 'website',
+    locale: 'it_IT',
+    siteName: 'Il Mio Blog',
+  }
+}</code></pre>
+
+<div class="key-concept">
+    <div class="key-concept-title">🎯 Title Template</div>
+    <p>Con <span class="inline-code">template: '%s | Il Mio Blog'</span>, ogni pagina che definisce solo <span class="inline-code">title: "Titolo"</span> avrà automaticamente "Titolo | Il Mio Blog"!</p>
+</div>
+
+<h2>JSON-LD per Rich Snippets</h2>
+<pre data-lang="jsx"><code>// app/blog/[slug]/page.js
+export default async function BlogPost({ params }) {
+  const { slug } = await params
+  const post = await getPost(slug)
+  
+  const jsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'Article',
+    headline: post.title,
+    image: post.coverImage,
+    datePublished: post.date,
+    author: {
+      '@type': 'Person',
+      name: post.author
+    }
+  }
+  
+  return (
+    &lt;&gt;
+      &lt;script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      /&gt;
+      &lt;article&gt;{post.content}&lt;/article&gt;
+    &lt;/&gt;
+  )
+}</code></pre>
+
+<div class="info-box tip">
+    <div class="info-box-title">🚀 Niente React Helmet!</div>
+    <p>Next.js gestisce SEO nativamente. Non serve React Helmet o altre librerie!</p>
+</div>
+
+<div class="exercise">
+    <div class="exercise-title">🎯 Esercizio</div>
+    <p>Aggiungi metadata completo al tuo blog con:</p>
+    <ol>
+        <li>Canonical per ogni post</li>
+        <li>Open Graph tags</li>
+        <li>Twitter Card</li>
+        <li>JSON-LD per Article</li>
+    </ol>
+</div>
+
+<div class="chapter-nav">
+    <a href="#data-fetching" class="btn secondary" onclick="showChapter('data-fetching')">← Data Fetching</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-metadata">
+            ✓ Segna Completato
+        </button>
+        <a href="#seo-advanced" class="btn" onclick="completeAndContinue('seo-advanced')">SEO Avanzato →</a>
+    </div>
+</div>

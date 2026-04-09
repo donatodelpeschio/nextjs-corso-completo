@@ -1,0 +1,62 @@
+<h1>Layouts e Templates</h1>
+
+<h2>Root Layout (Obbligatorio)</h2>
+<pre data-lang="jsx"><code>// app/layout.js
+export default function RootLayout({ children }) {
+  return (
+    &lt;html lang="it"&gt;
+      &lt;body&gt;
+        &lt;header&gt;Header Globale&lt;/header&gt;
+        {children}
+        &lt;footer&gt;Footer Globale&lt;/footer&gt;
+      &lt;/body&gt;
+    &lt;/html&gt;
+  )
+}</code></pre>
+
+<h2>Nested Layouts</h2>
+<pre data-lang="jsx"><code>// app/blog/layout.js
+export default function BlogLayout({ children }) {
+  return (
+    &lt;div className="max-w-4xl mx-auto"&gt;
+      &lt;aside&gt;Sidebar Blog&lt;/aside&gt;
+      &lt;main&gt;{children}&lt;/main&gt;
+    &lt;/div&gt;
+  )
+}
+
+// Si applica a tutte le route in /blog/*</code></pre>
+
+<h2>Templates vs Layouts</h2>
+<p><strong>Layouts</strong> = Persistono tra navigazioni (non re-render)<br>
+<strong>Templates</strong> = Nuovo render ad ogni navigazione</p>
+
+<pre data-lang="jsx"><code>// app/blog/template.js
+export default function BlogTemplate({ children }) {
+  return (
+    &lt;div className="animate-fade-in"&gt;
+      {children}
+    &lt;/div&gt;
+  )
+}
+// Si re-render ad ogni cambio pagina!</code></pre>
+
+<h2>Layout Groups</h2>
+<pre data-lang="structure"><code>app/
+├── (marketing)/
+│   ├── layout.js      → Layout marketing
+│   ├── about/page.js
+│   └── contact/page.js
+└── (dashboard)/
+    ├── layout.js      → Layout dashboard
+    └── settings/page.js</code></pre>
+
+<div class="chapter-nav">
+    <a href="#seo-advanced" class="btn secondary" onclick="showChapter('seo-advanced')">← SEO</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-layouts">
+            ✓ Segna Completato
+        </button>
+        <a href="#api-routes" class="btn" onclick="completeAndContinue('api-routes')">API Routes →</a>
+    </div>
+</div>

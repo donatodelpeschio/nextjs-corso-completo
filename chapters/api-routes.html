@@ -1,0 +1,82 @@
+<h1>API Routes</h1>
+
+<h2>Route Handlers (Next.js 15+)</h2>
+<pre data-lang="jsx"><code>// app/api/posts/route.js
+export async function GET(request) {
+  const posts = await db.posts.findMany()
+  return Response.json(posts)
+}
+
+export async function POST(request) {
+  const body = await request.json()
+  const post = await db.posts.create({ data: body })
+  return Response.json(post, { status: 201 })
+}</code></pre>
+
+<h2>Dynamic Routes</h2>
+<pre data-lang="jsx"><code>// app/api/posts/[id]/route.js
+export async function GET(request, { params }) {
+  const { id } = await params  // ✅ Next.js 15+
+  
+  const post = await db.posts.findUnique({
+    where: { id }
+  })
+  
+  if (!post) {
+    return Response.json(
+      { error: 'Not found' },
+      { status: 404 }
+    )
+  }
+  
+  return Response.json(post)
+}
+
+export async function DELETE(request, { params }) {
+  const { id } = await params
+  await db.posts.delete({ where: { id } })
+  return new Response(null, { status: 204 })
+}</code></pre>
+
+<h2>Request Helpers</h2>
+<pre data-lang="jsx"><code>export async function POST(request) {
+  // Query params
+  const searchParams = request.nextUrl.searchParams
+  const query = searchParams.get('query')
+  
+  // Headers
+  const auth = request.headers.get('authorization')
+  
+  // Cookies
+  const token = request.cookies.get('token')
+  
+  // Body
+  const data = await request.json()
+  
+  return Response.json({ success: true })
+}</code></pre>
+
+<h2>Middleware per Auth</h2>
+<pre data-lang="jsx"><code>// app/api/protected/route.js
+export async function GET(request) {
+  const session = await getSession(request)
+  
+  if (!session) {
+    return Response.json(
+      { error: 'Unauthorized' },
+      { status: 401 }
+    )
+  }
+  
+  return Response.json({ data: 'Protected' })
+}</code></pre>
+
+<div class="chapter-nav">
+    <a href="#layouts" class="btn secondary" onclick="showChapter('layouts')">← Layouts</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-api-routes">
+            ✓ Segna Completato
+        </button>
+        <a href="#middleware" class="btn" onclick="completeAndContinue('middleware')">Middleware →</a>
+    </div>
+</div>

@@ -1,0 +1,125 @@
+<h1>Progetto: Blog Completo</h1>
+
+<h2>Architettura</h2>
+<pre data-lang="structure"><code>my-blog/
+├── app/
+│   ├── blog/
+│   │   ├── page.js          → Lista
+│   │   └── [slug]/
+│   │       └── page.js      → Post
+│   ├── api/
+│   │   └── contact/
+│   │       └── route.js
+│   └── layout.js
+├── components/
+│   ├── Header.js
+│   └── PostCard.js
+├── lib/
+│   └── posts.js
+└── posts/
+    ├── first-post.md
+    └── second-post.md</code></pre>
+
+<h2>Utility Posts</h2>
+<pre data-lang="jsx"><code>// lib/posts.js
+import fs from 'fs/promises'
+import path from 'path'
+import matter from 'gray-matter'
+
+const postsDir = path.join(process.cwd(), 'posts')
+
+export async function getAllPosts() {
+  const files = await fs.readdir(postsDir)
+  
+  const posts = await Promise.all(
+    files.map(async (file) => {
+      const content = await fs.readFile(
+        path.join(postsDir, file),
+        'utf8'
+      )
+      const { data, content: markdown } = matter(content)
+      
+      return {
+        slug: file.replace(/\.md$/, ''),
+        ...data,
+        content: markdown
+      }
+    })
+  )
+  
+  return posts.sort((a, b) => 
+    new Date(b.date) - new Date(a.date)
+  )
+}</code></pre>
+
+<h2>Lista Post</h2>
+<pre data-lang="jsx"><code>// app/blog/page.js
+import { getAllPosts } from '@/lib/posts'
+import PostCard from '@/components/PostCard'
+
+export default async function Blog() {
+  const posts = await getAllPosts()
+  
+  return (
+    &lt;div className="max-w-4xl mx-auto p-8"&gt;
+      &lt;h1&gt;Blog&lt;/h1&gt;
+      {posts.map(post => (
+        &lt;PostCard key={post.slug} post={post} /&gt;
+      ))}
+    &lt;/div&gt;
+  )
+}</code></pre>
+
+<h2>Post Dinamico</h2>
+<pre data-lang="jsx"><code>// app/blog/[slug]/page.js
+import { getAllPosts } from '@/lib/posts'
+
+export async function generateMetadata({ params }) {
+  const { slug } = await params
+  const posts = await getAllPosts()
+  const post = posts.find(p => p.slug === slug)
+  
+  return {
+    title: post.title,
+    alternates: { canonical: `/blog/${slug}` }
+  }
+}
+
+export default async function Post({ params }) {
+  const { slug } = await params
+  const posts = await getAllPosts()
+  const post = posts.find(p => p.slug === slug)
+  
+  return (
+    &lt;article className="prose"&gt;
+      &lt;h1&gt;{post.title}&lt;/h1&gt;
+      &lt;div dangerouslySetInnerHTML={{ __html: post.content }} /&gt;
+    &lt;/article&gt;
+  )
+}
+
+export async function generateStaticParams() {
+  const posts = await getAllPosts()
+  return posts.map(p => ({ slug: p.slug }))
+}</code></pre>
+
+<div class="exercise">
+    <div class="exercise-title">🎯 Progetto Finale</div>
+    <p><strong>Estendi il blog con:</strong></p>
+    <ol>
+        <li>Categorie/Tags</li>
+        <li>Search functionality</li>
+        <li>Related posts</li>
+        <li>Comments (con Server Actions)</li>
+    </ol>
+</div>
+
+<div class="chapter-nav">
+    <a href="#optimization" class="btn secondary" onclick="showChapter('optimization')">← Ottimizzazione</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-blog-project">
+            ✓ Segna Completato
+        </button>
+        <a href="#deployment" class="btn" onclick="completeAndContinue('deployment')">Deployment →</a>
+    </div>
+</div>

@@ -1,0 +1,89 @@
+<h1>SEO Avanzato</h1>
+
+<h2>Sitemap Dinamica</h2>
+<pre data-lang="jsx"><code>// app/sitemap.js
+export default async function sitemap() {
+  const posts = await fetch('https://api.example.com/posts')
+    .then(r => r.json())
+  
+  const postUrls = posts.map(post => ({
+    url: `https://tuosito.com/blog/${post.slug}`,
+    lastModified: post.updatedAt,
+    changeFrequency: 'weekly',
+    priority: 0.8,
+  }))
+  
+  return [
+    {
+      url: 'https://tuosito.com',
+      lastModified: new Date(),
+      priority: 1,
+    },
+    ...postUrls,
+  ]
+}</code></pre>
+
+<h2>Robots.txt</h2>
+<pre data-lang="jsx"><code>// app/robots.js
+export default function robots() {
+  return {
+    rules: {
+      userAgent: '*',
+      allow: '/',
+      disallow: '/private/',
+    },
+    sitemap: 'https://tuosito.com/sitemap.xml',
+  }
+}</code></pre>
+
+<h2>RSS Feed</h2>
+<pre data-lang="jsx"><code>// app/feed.xml/route.js
+export async function GET() {
+  const posts = await getPosts()
+  
+  const rss = `<?xml version="1.0"?>
+    &lt;rss version="2.0"&gt;
+      &lt;channel&gt;
+        &lt;title&gt;Il Mio Blog&lt;/title&gt;
+        ${posts.map(post => `
+          &lt;item&gt;
+            &lt;title&gt;${post.title}&lt;/title&gt;
+            &lt;link&gt;https://blog.com/${post.slug}&lt;/link&gt;
+            &lt;pubDate&gt;${post.date}&lt;/pubDate&gt;
+          &lt;/item&gt;
+        `).join('')}
+      &lt;/channel&gt;
+    &lt;/rss&gt;`
+  
+  return new Response(rss, {
+    headers: { 'Content-Type': 'application/xml' }
+  })
+}</code></pre>
+
+<h2>Open Graph Images Dinamiche</h2>
+<pre data-lang="jsx"><code>// app/blog/[slug]/opengraph-image.jsx
+import { ImageResponse } from 'next/og'
+
+export default async function Image({ params }) {
+  const { slug } = await params
+  const post = await getPost(slug)
+  
+  return new ImageResponse(
+    (
+      &lt;div style={{ display: 'flex', fontSize: 60 }}&gt;
+        {post.title}
+      &lt;/div&gt;
+    ),
+    { width: 1200, height: 630 }
+  )
+}</code></pre>
+
+<div class="chapter-nav">
+    <a href="#metadata" class="btn secondary" onclick="showChapter('metadata')">← Metadata</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-seo-advanced">
+            ✓ Segna Completato
+        </button>
+        <a href="#layouts" class="btn" onclick="completeAndContinue('layouts')">Layouts →</a>
+    </div>
+</div>

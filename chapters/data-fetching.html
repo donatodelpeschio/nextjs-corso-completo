@@ -1,0 +1,90 @@
+<h1>Data Fetching Avanzato</h1>
+
+<h2>Fetch API Estesa</h2>
+<p>Next.js estende fetch con caching e revalidation automatici.</p>
+
+<h3>Caching Automatico</h3>
+<pre data-lang="jsx"><code>// Default: cached (SSG)
+const data = await fetch('https://api.example.com/posts')
+
+// No cache (SSR)
+const data = await fetch('https://api.example.com/posts', {
+  cache: 'no-store'
+})
+
+// Revalidate ogni 60 sec (ISR)
+const data = await fetch('https://api.example.com/posts', {
+  next: { revalidate: 60 }
+})</code></pre>
+
+<h3>Tag-based Revalidation</h3>
+<pre data-lang="jsx"><code>// Tagga la fetch
+const posts = await fetch('https://api.example.com/posts', {
+  next: { tags: ['posts'] }
+})
+
+// Poi invalida per tag
+import { revalidateTag } from 'next/cache'
+revalidateTag('posts')</code></pre>
+
+<h2>Server Actions (React 19+)</h2>
+<pre data-lang="jsx"><code>// app/actions.js
+'use server'
+
+export async function createPost(formData) {
+  const title = formData.get('title')
+  
+  await db.posts.create({
+    data: { title }
+  })
+  
+  revalidatePath('/blog')
+}
+
+// app/blog/new/page.js
+import { createPost } from '../actions'
+
+export default function NewPost() {
+  return (
+    &lt;form action={createPost}&gt;
+      &lt;input name="title" /&gt;
+      &lt;button type="submit"&gt;Crea&lt;/button&gt;
+    &lt;/form&gt;
+  )
+}</code></pre>
+
+<div class="key-concept">
+    <div class="key-concept-title">🔥 Server Actions</div>
+    <p>Nuova feature React 19: chiama funzioni server direttamente da form o eventi, senza API routes!</p>
+</div>
+
+<h2>Parallel Data Fetching</h2>
+<pre data-lang="jsx"><code>// ❌ Sequential (lento)
+const user = await fetch('/api/user')
+const posts = await fetch('/api/posts')
+
+// ✅ Parallel (veloce)
+const [user, posts] = await Promise.all([
+  fetch('/api/user'),
+  fetch('/api/posts')
+])</code></pre>
+
+<div class="exercise">
+    <div class="exercise-title">🎯 Esercizio</div>
+    <p>Crea una pagina che:</p>
+    <ol>
+        <li>Fetcha users e posts in parallelo</li>
+        <li>Usa ISR con revalidate 300 sec</li>
+        <li>Tagga entrambe le fetch</li>
+    </ol>
+</div>
+
+<div class="chapter-nav">
+    <a href="#client-components" class="btn secondary" onclick="showChapter('client-components')">← Client Components</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-data-fetching">
+            ✓ Segna Completato
+        </button>
+        <a href="#metadata" class="btn" onclick="completeAndContinue('metadata')">Metadata →</a>
+    </div>
+</div>

@@ -1,0 +1,55 @@
+<h1>Strategie di Rendering</h1>
+
+<h2>I Tre Pilastri del Rendering in Next.js 15+</h2>
+<p>Next.js ti dà 3 modi fondamentali per renderizzare le pagine con performance e freschezza dei dati ottimali.</p>
+
+<h3>1. Static Site Generation (SSG) ⚡</h3>
+<p><strong>Quando:</strong> Build time<br>
+<strong>Cosa:</strong> HTML pre-generato una volta<br>
+<strong>Ideale per:</strong> Contenuti stabili</p>
+
+<pre data-lang="jsx"><code>// app/about/page.js
+export default function About() {
+  return &lt;h1&gt;Chi Siamo - Pagina Statica&lt;/h1&gt;
+}
+// ✅ Generato al build, veloce come un razzo!</code></pre>
+
+<h3>2. Server-Side Rendering (SSR) 🔄</h3>
+<p><strong>Quando:</strong> Ogni richiesta<br>
+<strong>Cosa:</strong> HTML generato on-demand<br>
+<strong>Ideale per:</strong> Dati real-time</p>
+
+<pre data-lang="jsx"><code>async function getData() {
+  const res = await fetch('https://api.example.com/data', {
+    cache: 'no-store' // SSR!
+  })
+  return res.json()
+}</code></pre>
+
+<h3>3. Incremental Static Regeneration (ISR) 🔄⚡</h3>
+<p><strong>Quando:</strong> Build + revalidation periodica<br>
+<strong>Cosa:</strong> Statico che si aggiorna<br>
+<strong>Ideale per:</strong> Meglio di entrambi!</p>
+
+<pre data-lang="jsx"><code>const data = await fetch('https://api.example.com/posts', {
+  next: { revalidate: 3600 } // Aggiorna ogni ora
+})</code></pre>
+
+<div class="key-concept">
+    <div class="key-concept-title">🎯 Come Scegliere?</div>
+    <ul>
+        <li>Mai cambia → SSG</li>
+        <li>Cambia ogni ora/giorno → ISR</li>
+        <li>Sempre diverso → SSR</li>
+    </ul>
+</div>
+
+<div class="chapter-nav">
+    <a href="#pages-vs-app" class="btn secondary" onclick="showChapter('pages-vs-app')">← Pages vs App</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-rendering">
+            ✓ Segna Completato
+        </button>
+        <a href="#server-components" class="btn" onclick="completeAndContinue('server-components')">Server Components →</a>
+    </div>
+</div>

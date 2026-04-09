@@ -1,0 +1,168 @@
+<h1>Client Components</h1>
+
+<h2>Quando Serve JavaScript nel Browser</h2>
+<p>I Client Components sono componenti React "tradizionali" che eseguono nel browser e permettono interattività.</p>
+
+<h2>La Direttiva 'use client'</h2>
+<p>Per creare un Client Component, aggiungi <span class="inline-code">'use client'</span> in cima al file:</p>
+
+<pre data-lang="jsx"><code>// components/Counter.js
+'use client'  // ← OBBLIGATORIO!
+
+import { useState } from 'react'
+
+export default function Counter() {
+  const [count, setCount] = useState(0)
+  
+  return (
+    &lt;div&gt;
+      &lt;p&gt;Count: {count}&lt;/p&gt;
+      &lt;button onClick={() => setCount(count + 1)}&gt;
+        +1
+      &lt;/button&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+
+<div class="info-box critical">
+    <div class="info-box-title">⚠️ Senza 'use client'</div>
+    <p>Otterrai errore se usi useState, onClick o altri hook senza <span class="inline-code">'use client'</span>!</p>
+</div>
+
+<h2>Quando Usare Client Components</h2>
+<p>Usa Client Components quando hai bisogno di:</p>
+
+<ul>
+    <li><strong>Interattività</strong> - onClick, onChange, onSubmit</li>
+    <li><strong>State</strong> - useState, useReducer</li>
+    <li><strong>Effetti</strong> - useEffect, useLayoutEffect</li>
+    <li><strong>Browser APIs</strong> - localStorage, window, document</li>
+    <li><strong>Context</strong> - useContext, Context Provider</li>
+    <li><strong>Custom hooks</strong> - qualsiasi hook personalizzato</li>
+</ul>
+
+<h2>Form Interattivo</h2>
+<pre data-lang="jsx"><code>// components/ContactForm.js
+'use client'
+
+import { useState } from 'react'
+
+export default function ContactForm() {
+  const [email, setEmail] = useState('')
+  const [status, setStatus] = useState('idle')
+  
+  async function handleSubmit(e) {
+    e.preventDefault()
+    setStatus('loading')
+    
+    const res = await fetch('/api/contact', {
+      method: 'POST',
+      body: JSON.stringify({ email })
+    })
+    
+    setStatus(res.ok ? 'success' : 'error')
+  }
+  
+  return (
+    &lt;form onSubmit={handleSubmit}&gt;
+      &lt;input 
+        value={email}
+        onChange={(e) => setEmail(e.target.value)}
+        placeholder="Email"
+      /&gt;
+      &lt;button disabled={status === 'loading'}&gt;
+        {status === 'loading' ? 'Invio...' : 'Invia'}
+      &lt;/button&gt;
+    &lt;/form&gt;
+  )
+}</code></pre>
+
+<h2>Browser APIs</h2>
+<pre data-lang="jsx"><code>// components/ThemeSwitcher.js
+'use client'
+
+import { useState, useEffect } from 'react'
+
+export default function ThemeSwitcher() {
+  const [theme, setTheme] = useState('light')
+  
+  useEffect(() => {
+    const saved = localStorage.getItem('theme') || 'light'
+    setTheme(saved)
+  }, [])
+  
+  function toggleTheme() {
+    const newTheme = theme === 'light' ? 'dark' : 'light'
+    setTheme(newTheme)
+    localStorage.setItem('theme', newTheme)
+  }
+  
+  return (
+    &lt;button onClick={toggleTheme}&gt;
+      {theme === 'light' ? '🌙' : '☀️'}
+    &lt;/button&gt;
+  )
+}</code></pre>
+
+<h2>Pattern: Composizione Smart</h2>
+<p>La chiave è <strong>minimizzare</strong> la quantità di codice client-side:</p>
+
+<pre data-lang="jsx"><code>// ✅ BENE - Solo parte interattiva è client
+// app/page.js - SERVER COMPONENT
+async function getData() {
+  const res = await fetch('...')
+  return res.json()
+}
+
+export default async function Page() {
+  const data = await getData()  // Server
+  
+  return (
+    &lt;div&gt;
+      {data.map(item => (
+        &lt;ItemCard key={item.id} item={item} /&gt;  {/* Client */}
+      ))}
+    &lt;/div&gt;
+  )
+}
+
+// components/ItemCard.js - CLIENT COMPONENT
+'use client'
+export default function ItemCard({ item }) {
+  const [liked, setLiked] = useState(false)
+  
+  return (
+    &lt;div&gt;
+      {item.name}
+      &lt;button onClick={() => setLiked(!liked)}&gt;
+        {liked ? '❤️' : '🤍'}
+      &lt;/button&gt;
+    &lt;/div&gt;
+  )
+}</code></pre>
+
+<div class="key-concept">
+    <div class="key-concept-title">🎯 Regola del Pollice</div>
+    <p><strong>Inizia sempre con Server Components.</strong> Aggiungi <span class="inline-code">'use client'</span> solo quando serve davvero interattività. Meno codice client = app più veloce!</p>
+</div>
+
+<div class="exercise">
+    <div class="exercise-title">🎯 Esercizio: Todo List</div>
+    <p>Crea una Todo List con:</p>
+    <ol>
+        <li>Client Component per gestire la lista</li>
+        <li>Input per aggiungere todo</li>
+        <li>Bottone per toggle completato</li>
+        <li>Salva in localStorage</li>
+    </ol>
+</div>
+
+<div class="chapter-nav">
+    <a href="#server-components" class="btn secondary" onclick="showChapter('server-components')">← Server Components</a>
+    <div style="display: flex; gap: 1rem;">
+        <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-client-components">
+            ✓ Segna Completato
+        </button>
+        <a href="#data-fetching" class="btn" onclick="completeAndContinue('data-fetching')">Data Fetching →</a>
+    </div>
+</div>
