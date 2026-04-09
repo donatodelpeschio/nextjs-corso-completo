@@ -105,41 +105,69 @@ export default function ThemeSwitcher() {
 }</code></pre>
 
 <h2>Pattern: Composizione Smart</h2>
-<p>La chiave è <strong>minimizzare</strong> la quantità di codice client-side:</p>
+<p>La chiave è <strong>minimizzare</strong> la quantità di codice client-side.</p>
 
-<pre data-lang="jsx"><code>// ✅ BENE - Solo parte interattiva è client
-// app/page.js - SERVER COMPONENT
+<div class="info-box note">
+    <div class="info-box-title">📁 Due File Separati!</div>
+    <p>Server e Client Components vanno in <strong>file diversi</strong>:</p>
+    <pre data-lang="structure" style="margin-top: 0.5rem;"><code>my-app/
+├── app/
+│   └── page.js          ← SERVER COMPONENT
+└── components/
+    └── ItemCard.js      ← CLIENT COMPONENT</code></pre>
+</div>
+
+<h3>1° File - Server Component (app/page.js)</h3>
+<pre data-lang="jsx"><code>// app/page.js - SERVER COMPONENT
+// ❌ NO 'use client' qui!
+import ItemCard from '@/components/ItemCard'
+
 async function getData() {
-  const res = await fetch('...')
+  const res = await fetch('https://api.example.com/items')
   return res.json()
 }
 
 export default async function Page() {
-  const data = await getData()  // Server
-  
+  const data = await getData()  // Fetch sul server
+
   return (
     &lt;div&gt;
+      &lt;h1&gt;Lista Items&lt;/h1&gt;
       {data.map(item => (
-        &lt;ItemCard key={item.id} item={item} /&gt;  {/* Client */}
+        &lt;ItemCard key={item.id} item={item} /&gt;
       ))}
     &lt;/div&gt;
   )
-}
+}</code></pre>
 
-// components/ItemCard.js - CLIENT COMPONENT
-'use client'
+<h3>2° File - Client Component (components/ItemCard.js)</h3>
+<pre data-lang="jsx"><code>// components/ItemCard.js - CLIENT COMPONENT
+'use client'  // ← Questo file è client!
+
+import { useState } from 'react'
+
 export default function ItemCard({ item }) {
   const [liked, setLiked] = useState(false)
-  
+
   return (
     &lt;div&gt;
-      {item.name}
+      &lt;h3&gt;{item.name}&lt;/h3&gt;
       &lt;button onClick={() => setLiked(!liked)}&gt;
         {liked ? '❤️' : '🤍'}
       &lt;/button&gt;
     &lt;/div&gt;
   )
 }</code></pre>
+
+<div class="key-concept">
+    <div class="key-concept-title">🎯 Come Funziona</div>
+    <ol>
+        <li><span class="inline-code">page.js</span> esegue sul <strong>server</strong> → fetcha i dati</li>
+        <li>Passa i dati come props a <span class="inline-code">ItemCard</span></li>
+        <li><span class="inline-code">ItemCard</span> esegue nel <strong>browser</strong> → gestisce interattività</li>
+    </ol>
+    <p style="margin-top: 1rem;"><strong>Risultato:</strong> Dati fetchati sul server (veloce, sicuro) + UI interattiva nel browser (solo dove serve)!</p>
+</div>
 
 <div class="key-concept">
     <div class="key-concept-title">🎯 Regola del Pollice</div>
