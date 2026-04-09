@@ -218,30 +218,16 @@
             to { opacity: 1; transform: translateY(0); }
         }
 
-        .complete-chapter-btn {
-            position: fixed;
-            top: 2rem;
-            right: 2rem;
-            padding: 1rem 2rem;
+        .btn.complete {
             background: var(--success);
             color: white;
-            border: none;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            box-shadow: 0 4px 12px rgba(16, 185, 129, 0.3);
-            transition: all 0.3s ease;
-            font-size: 0.9rem;
-            font-family: 'Inter', sans-serif;
         }
 
-        .complete-chapter-btn:hover {
+        .btn.complete:hover {
             background: #059669;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
         }
 
-        .complete-chapter-btn.completed {
+        .btn.complete.completed {
             background: var(--secondary);
             color: var(--text-dim);
         }
@@ -703,7 +689,12 @@
 
             <div class="chapter-nav">
                 <span></span>
-                <a href="#setup" class="btn" onclick="showChapter('setup')">Iniziamo! →</a>
+                <div style="display: flex; gap: 1rem;">
+                    <button class="btn complete" onclick="toggleChapterComplete()" id="completeBtn-intro">
+                        ✓ Completato
+                    </button>
+                    <a href="#setup" class="btn" onclick="showChapter('setup')">Iniziamo! →</a>
+                </div>
             </div>
         </section>
 
